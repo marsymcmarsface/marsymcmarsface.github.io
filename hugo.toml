@@ -2,3 +2,7 @@ baseURL = 'marsy.mcmarsface.com'
 languageCode = 'en-us'
 title = "Marsy's Personal Site"
 theme = "playtime"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'

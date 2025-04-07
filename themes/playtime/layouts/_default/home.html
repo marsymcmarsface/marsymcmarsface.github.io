@@ -1,7 +1,8 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
-  {{ end }}
+  <div class="grid-layout">
+    {{ range where .Site.RegularPages "Section" "homebox" }}
+      {{ partial "box.html" . }}
+    {{ end }}
+    {{ partial "recent.html" . }}
+  </div>
 {{ end }}

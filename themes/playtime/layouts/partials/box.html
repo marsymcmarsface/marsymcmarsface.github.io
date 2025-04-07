@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="container-body">
+    {{ if .Params.link }}
+      <h2><a href="{{ .Params.link }}">{{ .Title }}</a></h2>
+    {{ else }}
+      <h2>{{ .Title }}</h2>
+    {{ end }}
+    <p>{{ .Params.description }}</p>
+  </div>
+</div>

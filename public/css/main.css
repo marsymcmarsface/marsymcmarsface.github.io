@@ -74,23 +74,52 @@ body {
 /* Main content area pushes footer to the bottom */
 main {
   flex: 1;
+  margin-top: 0;
 }
 
 /*--------------------------------------------------------------
-   Containers
+   Grid Layout for Boxes
+--------------------------------------------------------------*/
+.grid-layout {
+  display: grid;
+  grid-template-columns: 0.75fr 1.7fr 0.75fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  grid-template-areas:
+    "homebox1 content homebox2"
+    "homebox3 content recent"
+    "homebox4 content recent";
+  margin: 20px auto;
+  padding: 0 20px;
+  /* Let grid items stretch naturally */
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+/* Define grid area classes */
+.homebox1 { grid-area: homebox1; }
+.homebox2 { grid-area: homebox2; }
+.homebox3 { grid-area: homebox3; }
+.homebox4 { grid-area: homebox4; }
+.content  { grid-area: content; }
+.recent   { grid-area: recent; }
+
+/*--------------------------------------------------------------
+   Containers (Existing)
 --------------------------------------------------------------*/
 
 /* Outer container with a dark strip */
 .container {
   margin: 20px auto;
   width: 100%;
-  height: fit-content;
+  /* Do not fix the height; let the grid or content dictate it */
   display: flex;
   flex-direction: column;
   border-radius: 12px;
   background-color: #332b24; /* Dark strip color */
   box-shadow: rgba(0, 0, 0, 0.5) 6px 6px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* Inner container for white content, leaving room for the dark strip */
@@ -103,32 +132,19 @@ main {
   padding-bottom: 20px;
   margin-top: 40px; /* Height of the dark strip */
   box-shadow: rgba(0, 0, 0, 0.5) 6px 6px;
-
+  /* Allow content to fill and scroll when needed */
+  flex-grow: 1;
   overflow-y: auto;
 }
 
-/* Override link color within containers and posts */
+/* Ensure links inside containers are underlined on hover, etc. */
 .container a {
-  color: #332b24 !important; /* or whatever color you want for non-hover state */
-  text-decoration: none;      /* no underline normally */
+  color: #332b24 !important;
+  text-decoration: none;
 }
 
 .container a:hover {
-  text-decoration: underline; /* add underline on hover */
-}
-
-
-
-/*--------------------------------------------------------------
-   Grid Layout for Boxes
---------------------------------------------------------------*/
-
-.grid-layout {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin: 40px auto;
-  padding: 0 20px;
+  text-decoration: underline;
 }
 
 /*--------------------------------------------------------------

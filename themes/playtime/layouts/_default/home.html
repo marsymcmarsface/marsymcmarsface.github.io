@@ -3,6 +3,11 @@
     {{ range where .Site.RegularPages "Section" "homebox" }}
       {{ partial "box.html" . }}
     {{ end }}
-    {{ partial "recent.html" . }}
+    <div class="content">
+      {{ .Content }}
+    </div>
+    <div class="recent">
+      {{ partial "recent.html" . }}
+    </div>
   </div>
 {{ end }}

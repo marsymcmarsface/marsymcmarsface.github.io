@@ -16,13 +16,13 @@
   </url><url>
     <loc>//localhost:1313/categories/</loc>
   </url><url>
-    <loc>//localhost:1313/homebox/grid/</loc>
-  </url><url>
     <loc>//localhost:1313/homebox/</loc>
   </url><url>
     <loc>//localhost:1313/homebox/status/</loc>
   </url><url>
     <loc>//localhost:1313/tags/</loc>
+  </url><url>
+    <loc>//localhost:1313/homebox/grid/</loc>
   </url><url>
     <loc>//localhost:1313/homebox/stuff/</loc>
   </url>

@@ -1,5 +1,5 @@
 +++
 title = "Status"
-description = "Developing this website!"
+description = "Focusing on college. Busy busy busy!"
 gridarea = "homebox2"
 +++

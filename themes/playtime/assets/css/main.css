@@ -83,12 +83,12 @@ main {
 .grid-layout {
   display: grid;
   grid-template-columns: 0.75fr 1.7fr 0.75fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-auto-rows: min-content min-content min-content;
   gap: 20px;
   grid-template-areas:
     "homebox1 content homebox2"
     "homebox3 content recent"
-    "homebox4 content recent";
+    "homebox4 content homebox5";
   margin: 20px auto;
   padding: 0 20px;
   /* Let grid items stretch naturally */
@@ -101,6 +101,7 @@ main {
 .homebox2 { grid-area: homebox2; }
 .homebox3 { grid-area: homebox3; }
 .homebox4 { grid-area: homebox4; }
+.homebox5 { grid-area: homebox5; }
 .content  { grid-area: content; }
 .recent   { grid-area: recent; }
 
@@ -237,4 +238,10 @@ footer {
   background-image: linear-gradient(to bottom, #c3cfe2, #f5f6fa);
   padding: 20px;
   color: #000;
+}
+
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

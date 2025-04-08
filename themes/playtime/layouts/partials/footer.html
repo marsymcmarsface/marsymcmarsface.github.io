@@ -1,4 +1,4 @@
 <div class="footer-info">
     <p>Copyright {{ now.Year }}. All rights reserved.</p>
-    <p>Last Updated: {{ .Date }}</p>
+    <p>Last Updated: {{ .Date | time.Format "Mon, Jan 2 2006 @ 15:04:05 MST" }}</p>
   </div>  

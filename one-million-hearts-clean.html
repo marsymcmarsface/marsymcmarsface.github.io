@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>One Million Hearts ❤️</title><style>
+*{box-sizing:border-box}html,body{margin:0;background:#fff5f7;color:#a91f4b;font-family:system-ui,sans-serif}header{position:fixed;z-index:5;top:0;left:0;right:0;background:#fff5f7ed;backdrop-filter:blur(12px);border-bottom:1px solid #f5cbd8;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}header strong{font-size:clamp(14px,3vw,20px)}#count{font-variant-numeric:tabular-nums;font-weight:700}main{padding-top:76px}#scroll{height:calc(100dvh - 76px);overflow:auto;overflow-anchor:none;overscroll-behavior:contain;position:relative}#spacer{position:relative;width:100%}#visible{will-change:transform;position:absolute;top:0;left:0;right:0;display:grid;justify-content:center;align-content:start;pointer-events:none}.heart{text-align:center;line-height:1;display:flex;align-items:center;justify-content:center;user-select:none}
+</style></head><body><header><strong>❤️ One Million Hearts</strong><span id="count">1 / 1,000,000</span></header><main><div id="scroll"><div id="spacer"><div id="visible"></div></div></div></main><script>
+(()=>{'use strict';
+const TOTAL=1000000,SIZE=34,MAX_HEIGHT=6000000,BUFFER=12;
+const scroll=document.getElementById('scroll'),spacer=document.getElementById('spacer'),visible=document.getElementById('visible'),count=document.getElementById('count');
+let cols=1,totalRows=1,virtualHeight=1,raf=0,lastStart=-1,lastEnd=-1;
+function setup(){
+  cols=Math.max(1,Math.floor(scroll.clientWidth/SIZE));
+  totalRows=Math.ceil(TOTAL/cols);
+  virtualHeight=Math.min(MAX_HEIGHT,totalRows*SIZE);
+  spacer.style.height=virtualHeight+'px';
+  visible.style.gridTemplateColumns=`repeat(${cols}, ${SIZE}px)`;
+  visible.style.gridAutoRows=SIZE+'px';
+  lastStart=-1;lastEnd=-1;
+  render();
+}
+function render(){
+  raf=0;
+  const maxScroll=Math.max(0,scroll.scrollHeight-scroll.clientHeight);
+  const fraction=maxScroll?Math.min(1,Math.max(0,scroll.scrollTop/maxScroll)):0;
+  const viewportRows=Math.max(1,Math.ceil(scroll.clientHeight/SIZE)+1);
+  // Fractional virtual row prevents the hearts from snapping a full row at a time.
+  const virtualTop=fraction*Math.max(0,totalRows-viewportRows);
+  const topRow=Math.floor(virtualTop);
+  const partial=(virtualTop-topRow)*SIZE;
+  const startRow=Math.max(0,topRow-BUFFER);
+  const endRow=Math.min(totalRows,topRow+viewportRows+BUFFER+1);
+  const start=startRow*cols,end=Math.min(TOTAL,endRow*cols);
+  if(start!==lastStart||end!==lastEnd){
+    lastStart=start;lastEnd=end;
+    const fragment=document.createDocumentFragment();
+    for(let i=start;i<end;i++){
+      const el=document.createElement('span');el.className='heart';
+      el.textContent='❤️';el.style.fontSize='24px';el.setAttribute('aria-hidden','true');
+      fragment.appendChild(el);
+    }
+    visible.replaceChildren(fragment);
+  }
+  // Align the fractional virtual position to the actual scroll viewport.
+  const offset=(virtualTop-startRow)*SIZE;
+  visible.style.transform=`translate3d(0,${(scroll.scrollTop-offset).toFixed(3)}px,0)`;
+  const passed=fraction>=1?TOTAL:Math.min(TOTAL,Math.floor(virtualTop*cols));
+  count.textContent=`${passed.toLocaleString()} / ${TOTAL.toLocaleString()}`;
+  count.title=`Currently near heart ${(Math.min(TOTAL,topRow*cols+1)).toLocaleString()}`;
+}
+scroll.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(render)},{passive:true});
+window.addEventListener('resize',()=>{
+  const max=scroll.scrollHeight-scroll.clientHeight;
+  const fraction=max>0?scroll.scrollTop/max:0;
+  setup();scroll.scrollTop=fraction*Math.max(0,scroll.scrollHeight-scroll.clientHeight);render();
+});
+setup();
+})();
+</script></body></html>
